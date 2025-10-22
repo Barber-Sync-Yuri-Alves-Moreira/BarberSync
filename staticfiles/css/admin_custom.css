@@ -1,0 +1,94 @@
+/* Em static/css/admin_custom.css */
+
+/* --- 1. ESCONDER ITENS INDESEJADOS --- */
+.app-auth,
+.ui-customizer-toggler,
+.main-footer,
+.breadcrumb {
+    display: none !important;
+}
+
+/* --- 2. TEMA PADRÃO --- */
+
+/* Header (Barra do Topo) */
+.main-header.navbar {
+    background-color: #232225 !important; 
+    border-bottom: 1px solid #444444 !important; 
+}
+.main-header .nav-link {
+    color: #FFFFFF !important; 
+}
+
+/* Fundo principal da área de conteúdo */
+.content-wrapper, .content-wrapper .content {
+    background-color: #1E1E1E !important; 
+}
+
+/* Cards */
+.card {
+    background-color: #232225 !important; 
+    border: 1px solid #444444 !important; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Cabeçalho dos cards */
+.card-header {
+    color: #FFFFFF !important; 
+    border-bottom: 1px solid #444444 !important; 
+}
+
+/* --- NOVA REGRA MAIS FORTE PARA TODOS OS TÍTULOS --- */
+/* Deixa TODOS os H1, H2, H3, etc., dentro da área de conteúdo BRANCOS */
+.content-wrapper h1,
+.content-wrapper h2,
+.content-wrapper h3,
+.content-wrapper h4,
+.content-wrapper h5,
+.content-wrapper h6 {
+    color: #FFFFFF !important; 
+}
+/* --- FIM DA NOVA REGRA --- */
+
+/* Tabela de listagem */
+table.table, table.table th, table.table td {
+    color: rgba(255, 255, 255, 0.7) !important; 
+}
+table.table thead th {
+    color: #FFFFFF !important; 
+    border-bottom: 1px solid #444444 !important; 
+}
+table.table tbody tr a {
+    color: #00bfff !important; 
+    font-weight: 500;
+}
+table.table tbody tr:hover {
+    background-color: #444444 !important; 
+    color: #FFFFFF !important;
+}
+
+/* --- 3. ESTILIZAR OS FORMULÁRIOS --- */
+
+.form-group label {
+    color: #FFFFFF !important; 
+}
+.form-control, .select2-container--default .select2-selection--single {
+    background-color: #1E1E1E !important; 
+    color: #FFFFFF !important; 
+    border: 1px solid #444444 !important; 
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #FFFFFF !important;
+}
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important; 
+}
+.select2-dropdown {
+    background-color: #232225 !important;
+    border: 1px solid #444444 !important;
+}
+.select2-results__option {
+    color: #FFFFFF !important; 
+}
+.select2-results__option--highlighted {
+    background-color: #444444 !important;
+}
