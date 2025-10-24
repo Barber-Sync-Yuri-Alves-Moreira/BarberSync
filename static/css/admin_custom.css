@@ -1,11 +1,12 @@
-
-.app-auth,
 .ui-customizer-toggler,
 .main-footer,
 .breadcrumb {
     display: none !important;
 }
 
+.app-auth a[href*="/auth/group/"] {
+    display: none !important;
+}
 
 .main-header.navbar {
     background-color: #232225 !important; 
@@ -15,11 +16,9 @@
     color: #FFFFFF !important; 
 }
 
-
 .content-wrapper, .content-wrapper .content {
     background-color: #1E1E1E !important; 
 }
-
 
 .card {
     background-color: #232225 !important; 
@@ -27,12 +26,10 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4) !important;
 }
 
-
 .card-header {
     color: #FFFFFF !important; 
     border-bottom: 1px solid #444444 !important; 
 }
-
 
 .content-wrapper h1,
 .content-wrapper h2,
@@ -42,8 +39,6 @@
 .content-wrapper h6 {
     color: #FFFFFF !important; 
 }
-
-
 
 table.table, table.table th, table.table td {
     color: rgba(255, 255, 255, 0.7) !important; 
@@ -60,8 +55,6 @@ table.table tbody tr:hover {
     background-color: #444444 !important; 
     color: #FFFFFF !important;
 }
-
-
 
 .form-group label {
     color: #FFFFFF !important; 

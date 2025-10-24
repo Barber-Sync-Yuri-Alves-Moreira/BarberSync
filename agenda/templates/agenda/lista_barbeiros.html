@@ -14,10 +14,22 @@
             font-weight: 300;
             max-width: 600px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: #1E1E1E;
-            color: #fff; /
+
+            padding: 20px 10px; 
+            background-color: #1E1E1E; 
+            color: #FFFFFF; 
         }
+
+
+        .main-card {
+
+            background-color: #2E2C30; 
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+                        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        }
+
 
         .logo-container {
             text-align: center;
@@ -32,84 +44,87 @@
 
         h1 {
             text-align: center;
-            color: #fff;
+            color: #FFFFFF; 
             font-size: 1.2em;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 30px;
+            font-weight: 500;
         }
 
         .barbeiro-lista {
             list-style: none;
             padding: 0;
         }
+        
 
         .barbeiro-card {
-            background-color: #1E1E1E; /* Fundo do card */
-            border-radius: 12px; /* A curvatura do card */
+            background-color: #1E1E1E; 
+            border-radius: 12px;
             margin-bottom: 20px;
-            overflow: hidden; /* ESSENCIAL para "cortar" a imagem */
-            transition: background-color 0.9s, box-shadow 0.9s; 
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); 
+            overflow: hidden; 
+            transition: all ease-in-out 0.3s;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+                        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+            position: relative; 
+            cursor: pointer;
+        }
+        
+        .barbeiro-card:hover {
+            box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
+                        rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
+                        rgba(0, 0, 0, 0.09) 0px 32px 16px;
+        }
+    
+        .barbeiro-card:active {
+            scale: 0.95;
         }
 
+        .barbeiro-card::after {
+            content: "";
+            width: 800px; 
+            height: 800px;
+            border-radius: 50%;
+            background-color: #2E2C30; 
+            position: absolute;
+            left: -850px; 
+            top: -320px; 
+            transition: left 0.4s 0s linear; 
+            z-index: 1; 
+        }
+
+        .barbeiro-card:hover::after {
+            left: -100px; 
+        }
+    
         .barbeiro-card a {
             text-decoration: none;
-            color: #fff;
+            color: #FFFFFF; 
             display: flex; 
             align-items: center; 
             width: 100%;
-           
             padding: 0 15px 0 0; 
             box-sizing: border-box; 
-            
-            min-height: 140px; 
+            position: relative; 
+            z-index: 10; 
         }
+        
 
-        .barbeiro-card:hover {
-            background-color: #000000; 
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6); 
-        }
-
-
-        .barbeiro-imagem {
-            width: 140px;  
-            height: 140px; 
-            overflow: hidden; 
-            flex-shrink: 0; 
-
-            
-            margin-left: -20px; 
-
-           
-            border: none; 
-
-           
-            border-top-right-radius: 50%;
-            border-bottom-right-radius: 50%;
-            background-color: #1E1E1E; 
-
-            
-            display: flex;
-            align-items: center;
-            justify-content: flex-end; 
-        }
-
-        .barbeiro-imagem img {
+        .barbeiro-imagem img, .placeholder-imagem {
             width: 140px; 
             height: 140px;
+            border-radius: 60%; 
             object-fit: cover;
-        
-            border-radius: 0; 
+            flex-shrink: 0; 
+            margin-left: -50px; 
         }
 
-        
         .barbeiro-conteudo {
             flex-grow: 1; 
-            
-            padding-left: 20px; 
-            padding-top: 15px; 
-            padding-bottom: 15px; 
+            padding-left: 25px; 
+            padding-top: 20px;
+            padding-bottom: 20px;
+            transition: color 0.3s 0s linear;
         }
 
         .barbeiro-conteudo h3 {
@@ -117,37 +132,39 @@
             font-size: 1.3em;
             text-align: left; 
             font-weight: 500;
+            color: #FFFFFF;
+            transition: color 0.3s 0.1s linear; 
+        }
+        
+        .barbeiro-card:hover .barbeiro-conteudo h3 {
+            color: #ffffff; 
         }
 
         .barbeiro-conteudo p {
             margin: 0;
             font-size: 0.9em;
-            color: #ccc;
+            color: #fafafad2; 
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            transition: color 0.3s 0.1s linear; 
+        }
+        
+        .barbeiro-card:hover .barbeiro-conteudo p {
+             color: #fafafad2; 
+             opacity: 0.8;
         }
 
-   
         .placeholder-imagem {
-            width: 140px; 
-            height: 140px; 
-            background-color: #555;
+            background-color: #444444; 
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.8em;
-            color: #999;
-        
-            border: none; 
-           
-            border-top-right-radius: 50%;
-            border-bottom-right-radius: 50%;
-            margin-left: -70px;
+            color: rgba(255, 255, 255, 0.7); 
         }
 
-      
         .barbeiro-card.no-image .barbeiro-imagem,
         .barbeiro-card.no-image .placeholder-imagem {
             display: none;
@@ -157,51 +174,50 @@
             padding-top: 20px;
             padding-bottom: 20px;
         }
-        .barbeiro-card.no-image a {
-            min-height: auto; 
-        }
 
     </style>
 </head>
 <body>
 
-    <div class="logo-container">
-        <h2>BarberSync</h2>
-    </div>
+    <div class="main-card">
 
-    <h1>Selecione um Profissional</h1>
+        <div class="logo-container">
+            <h2>BarberSync</h2>
+        </div>
 
-    <ul class="barbeiro-lista">
+        <h1>Selecione um Profissional</h1>
 
-        {% for barbeiro in barbeiros %}
-        <li class="barbeiro-card {% if not barbeiro.imagem %}no-image{% endif %}">
-
-            <a href="{% url 'lista_servicos' barbeiro.id %}">
-
-                {% if barbeiro.imagem %}
-                    <div class="barbeiro-imagem">
-                        <img src="{{ barbeiro.imagem.url }}" alt="{{ barbeiro.nome }}">
-                    </div>
-                {% else %}
-                    <div class="placeholder-imagem">Sem Foto</div>
-                {% endif %}
-
-                <div class="barbeiro-conteudo">
-                    <h3>{{ barbeiro.nome }}</h3>
-                    {% if barbeiro.descricao %}
-                        <p>{{ barbeiro.descricao }}</p>
+        <ul class="barbeiro-lista">
+            
+            {% for barbeiro in barbeiros %}
+            <li class="barbeiro-card {% if not barbeiro.imagem %}no-image{% endif %}">
+                
+                <a href="{% url 'lista_servicos' barbeiro.id %}">
+                    
+                    {% if barbeiro.imagem %}
+                        <div class="barbeiro-imagem">
+                            <img src="{{ barbeiro.imagem.url }}" alt="{{ barbeiro.nome }}">
+                        </div>
                     {% else %}
-                        <p>Profissional especialista.</p>
+                        <div class="placeholder-imagem">Sem Foto</div>
                     {% endif %}
-                </div>
-            </a>
-        </li>
-        {% empty %}
-            <li class="barbeiro-card no-image" style="justify-content: center; padding: 20px; color: #999;">
-                Nenhum barbeiro cadastrado.
-            </li>
-        {% endfor %}
-    </ul>
 
-</body>
+                    <div class="barbeiro-conteudo">
+                        <h3>{{ barbeiro.nome }}</h3>
+                        {% if barbeiro.descricao %}
+                            <p>{{ barbeiro.descricao }}</p>
+                        {% else %}
+                            <p>Profissional especialista.</p>
+                        {% endif %}
+                    </div>
+                </a>
+            </li>
+            {% empty %}
+                <li class="barbeiro-card no-image" style="justify-content: center; padding: 20px; color: #999;">
+                    Nenhum barbeiro cadastrado.
+                </li>
+            {% endfor %}
+        </ul>
+
+    </div> </body>
 </html>
