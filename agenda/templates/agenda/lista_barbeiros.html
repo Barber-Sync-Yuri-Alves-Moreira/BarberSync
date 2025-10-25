@@ -20,8 +20,9 @@
             color: #FFFFFF; 
         }
 
+        /* --- ALTERAÇÃO 1: Sombra suave (de volta) --- */
         .main-card {
-            background-color: #1E1E1E; 
+            background-color: #1E1E1E;
             border-radius: 12px;
             padding: 20px;
             box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2),
@@ -39,14 +40,12 @@
             font-weight: 500;
         }
 
-
         .logo-container img {
             max-width: 170px; 
             height: auto;
             margin-top: 10px; 
             border-radius: 8px;
         }
-
 
         h1 {
             text-align: center;
@@ -63,47 +62,91 @@
             padding: 0;
         }
         
+        /* --- ALTERAÇÃO 2: Sombra suave (de volta) --- */
         .barbeiro-card {
             background-color: #1E1E1E; 
             border-radius: 12px;
             margin-bottom: 20px;
             overflow: hidden; 
+            
+            /* Sombra suave */
             box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2),
                         0 0 1rem rgba(0,0,0,0.2);
+            
             position: relative; 
             cursor: pointer;
+            
+            /* Layout copiado do lista_servicos */
+            display: flex;
+            align-items: center;
+            padding: 0 15px 0 0; 
+            box-sizing: border-box; 
+            min-height: 140px; 
         }
         
+        /* --- ALTERAÇÃO 3: Removido o :hover --- */
+        /* .barbeiro-card:hover { ... } FOI REMOVIDO */
+    
         .barbeiro-card:active {
             scale: 0.95;
         }
-    
+
+        /* O link <a> agora não controla mais o layout */
         .barbeiro-card a {
             text-decoration: none;
             color: #FFFFFF; 
-            display: flex; 
-            align-items: center; 
-            width: 100%;
-            padding: 0 15px 0 0; 
-            box-sizing: border-box; 
-            position: relative; 
-            z-index: 10; 
+            display: contents; /* Faz o link "desaparecer" para o layout */
         }
         
-        .barbeiro-imagem img, .placeholder-imagem {
+        /* Container da Imagem (Copiado de lista_servicos) */
+        .barbeiro-imagem {
             width: 140px; 
-            height: 140px;
-            border-radius: 50%; 
-            object-fit: cover;
+            height: 140px; 
+            overflow: hidden; 
             flex-shrink: 0; 
-            margin-left: -50px; 
+            margin-left: -20px; 
+            border: none; 
+            border-top-right-radius: 50%;
+            border-bottom-right-radius: 50%;
+            background-color: #1E1E1E; 
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
         }
 
+        /* Imagem (Copiado de lista_servicos) */
+        .barbeiro-imagem img {
+            width: 140px; 
+            height: 140px;
+            object-fit: cover;
+            border-radius: 0; 
+            margin-left: 0; 
+        }
+
+        /* Placeholder (Copiado de lista_servicos) */
+        .placeholder-imagem {
+            width: 140px; 
+            height: 140px; 
+            background-color: #444444; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.7); 
+            border: none; 
+            border-top-right-radius: 50%;
+            border-bottom-right-radius: 50%;
+            margin-left: -70px; 
+            flex-shrink: 0;
+            border-radius: 0; 
+        }
+
+        /* Conteúdo do Texto (Copiado de lista_servicos) */
         .barbeiro-conteudo {
             flex-grow: 1; 
-            padding-left: 25px; 
-            padding-top: 20px;
-            padding-bottom: 20px;
+            padding-left: 20px; 
+            padding-top: 15px; 
+            padding-bottom: 15px; 
         }
 
         .barbeiro-conteudo h3 {
@@ -111,7 +154,7 @@
             font-size: 1.3em;
             text-align: left; 
             font-weight: 500;
-            color: #FFFFFF;
+            color: #FFFFFF; 
         }
         
         .barbeiro-conteudo p {
@@ -123,16 +166,8 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        
-        .placeholder-imagem {
-            background-color: #444444; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8em;
-            color: rgba(255, 255, 255, 0.7); 
-        }
 
+        /* Regras "no-image" (Copiadas de lista_servicos) */
         .barbeiro-card.no-image .barbeiro-imagem,
         .barbeiro-card.no-image .placeholder-imagem {
             display: none;
@@ -141,6 +176,9 @@
             padding-left: 20px; 
             padding-top: 20px;
             padding-bottom: 20px;
+        }
+        .barbeiro-card.no-image {
+             min-height: auto;
         }
 
     </style>
@@ -160,7 +198,6 @@
             
             {% for barbeiro in barbeiros %}
             <li class="barbeiro-card {% if not barbeiro.imagem %}no-image{% endif %}">
-                
                 <a href="{% url 'lista_servicos' barbeiro.id %}">
                     
                     {% if barbeiro.imagem %}
