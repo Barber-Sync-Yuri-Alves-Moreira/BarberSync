@@ -4,11 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
-
     <title>Selecionar Serviço</title>
     <style>
         body {
@@ -16,41 +14,32 @@
             font-weight: 300;
             max-width: 600px;
             margin: 0 auto;
-            /* Alterado o padding para 20px 10px (igual lista_barbeiros) */
             padding: 20px 10px; 
             background-color: #1E1E1E;
             color: #fff;
         }
-
-        /* --- ALTERAÇÃO 1: Adicionado o Main Card --- */
         .main-card {
             background-color: #1E1E1E;
             border-radius: 12px;
             padding: 20px;
-            /* Sombra suave (igual lista_barbeiros) */
             box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2),
                         0 0 1rem rgba(0,0,0,0.2);
         }
-
         .logo-container {
             text-align: center;
             padding: 20px 0;
         }
-
         .logo-container h2 {
             margin: 0;
             font-size: 2em;
             font-weight: 500;
         }
-
-        /* --- ALTERAÇÃO 2: Adicionado o CSS do Logo --- */
         .logo-container img {
-            max-width: 170px; /* Mesmo tamanho da outra tela */
+            max-width: 170px;
             height: auto;
             margin-top: 10px; 
             border-radius: 8px;
         }
-
         h1 {
             text-align: center;
             color: #fff;
@@ -60,7 +49,6 @@
             margin-bottom: 30px;
             font-weight: 500;
         }
-
         .link-voltar { 
             display: block; 
             margin-bottom: 20px; 
@@ -69,8 +57,6 @@
             text-decoration: none;
             font-weight: 300;
         }
-
-        
         .barbeiro-selecionado-card {
             background-color: #1E1E1E; 
             border-radius: 12px;
@@ -81,14 +67,9 @@
             padding: 0 15px 0 0; 
             box-sizing: border-box; 
             min-height: 140px; 
-            
-            /* --- ALTERAÇÃO 3: Sombra suave (igual lista_barbeiros) --- */
             box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2),
                         0 0 1rem rgba(0,0,0,0.2);
-            /* Removida a transição */
         }
-
-        
         .barbeiro-selecionado-card .barbeiro-imagem {
             width: 140px; 
             height: 140px; 
@@ -103,14 +84,12 @@
             align-items: center;
             justify-content: flex-end;
         }
-
         .barbeiro-selecionado-card .barbeiro-imagem img {
             width: 140px; 
             height: 140px;
             object-fit: cover;
             border-radius: 0; 
         }
-
         .barbeiro-selecionado-card .placeholder-imagem {
             width: 140px; 
             height: 140px; 
@@ -125,22 +104,18 @@
             border-bottom-right-radius: 50%;
             margin-left: -70px; 
         }
-
-        
         .barbeiro-selecionado-card .barbeiro-conteudo {
             flex-grow: 1; 
             padding-left: 20px; 
             padding-top: 15px; 
             padding-bottom: 15px; 
         }
-
         .barbeiro-selecionado-card .barbeiro-conteudo h3 {
             margin: 0 0 5px 0;
             font-size: 1.3em;
             text-align: left; 
             font-weight: 500;
         }
-
         .barbeiro-selecionado-card .barbeiro-conteudo p {
             margin: 0;
             font-size: 0.9em;
@@ -150,8 +125,6 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-
-        
         .barbeiro-selecionado-card.no-image .barbeiro-imagem,
         .barbeiro-selecionado-card.no-image .placeholder-imagem {
             display: none;
@@ -164,25 +137,17 @@
         .barbeiro-selecionado-card.no-image {
              min-height: auto;
         }
-
-
-        
         .servico-lista {
             list-style: none;
             padding: 0;
         }
-
         .servico-card {
             background-color: #1E1E1E; 
             border-radius: 12px;
             margin-bottom: 15px;
-            
-            /* --- ALTERAÇÃO 4: Sombra suave (igual lista_barbeiros) --- */
             box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2),
                         0 0 1rem rgba(0,0,0,0.2);
-            /* Removida a transição */
         }
-
         .servico-card a {
             text-decoration: none;
             color: #fff;
@@ -192,36 +157,27 @@
             padding: 20px;
             width: 100%;
         }
-
-        /* --- ALTERAÇÃO 5: Removido o :hover --- */
-        /* .servico-card:hover { ... } FOI REMOVIDO */
-
         .servico-card span {
             font-size: 1.1em;
             font-weight: 500; 
         }
-
         .servico-card strong {
             font-size: 1.1em;
             color: #00bfff;
             font-weight: 500; 
         }
-
     </style>
 </head>
 <body>
-
     <div class="main-card">
-
         <div class="logo-container">
             <h2>BarberSync</h2>
             <img src="{% static 'agenda/img/logo_barbersync.png' %}" alt="Logo BarberSync">
         </div>
-
+        
         <a href="{% url 'lista_barbeiros' %}" class="link-voltar">&larr; Trocar profissional</a>
 
         <div class="barbeiro-selecionado-card {% if not barbeiro.imagem %}no-image{% endif %}">
-
             {% if barbeiro.imagem %}
                 <div class="barbeiro-imagem">
                     <img src="{{ barbeiro.imagem.url }}" alt="{{ barbeiro.nome }}">
@@ -229,7 +185,6 @@
             {% else %}
                 <div class="placeholder-imagem">Sem Foto</div>
             {% endif %}
-
             <div class="barbeiro-conteudo">
                 <h3>{{ barbeiro.nome }}</h3>
                 {% if barbeiro.descricao %}
@@ -242,11 +197,11 @@
         <h1>Selecione o Serviço</h1>
 
         <ul class="servico-lista">
-
             {% for servico in servicos %}
             <li class="servico-card">
-                <a href="#">
-                    <span>{{ servico.nome }}</span>
+                
+                <a href="{% url 'selecionar_data' barbeiro.id servico.id %}">
+                <span>{{ servico.nome }}</span>
                     {% if servico.preco %}
                         <strong>R$ {{ servico.preco|floatformat:2 }}</strong>
                     {% endif %}
@@ -258,6 +213,6 @@
                 </li>
             {% endfor %}
         </ul>
-        
-    </div> </body>
+    </div>
+</body>
 </html>

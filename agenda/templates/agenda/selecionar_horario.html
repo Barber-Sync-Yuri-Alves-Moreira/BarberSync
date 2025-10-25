@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <title>Selecionar Horário</title>
+    <style>
+
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            font-weight: 300; max-width: 600px; margin: 0 auto;
+            padding: 20px 10px; background-color: #1E1E1E; color: #fff;
+        }
+        .main-card {
+            background-color: #1E1E1E; border-radius: 12px; padding: 20px;
+            box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2), 0 0 1rem rgba(0,0,0,0.2);
+        }
+        .logo-container { text-align: center; padding: 20px 0; }
+        .logo-container h2 { margin: 0; font-size: 2em; font-weight: 500; }
+        .logo-container img {
+            max-width: 170px; height: auto; margin-top: 10px; border-radius: 8px;
+        }
+        h1 {
+            text-align: center; color: #fff; font-size: 1.2em; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 30px; font-weight: 500;
+        }
+        .link-voltar { 
+            display: block; margin-bottom: 20px; text-align: center; 
+            color: #00bfff; text-decoration: none; font-weight: 300;
+        }
+
+        .info-card {
+            background-color: #1E1E1E; border-radius: 12px; margin-bottom: 20px;
+            box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2), 0 0 1rem rgba(0,0,0,0.2);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .info-card span { font-size: 1.1em; font-weight: 500; }
+        .info-card strong {
+            font-size: 1.1em; color: #00bfff; font-weight: 500; 
+        }
+
+
+        .horario-lista {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr; 
+            gap: 15px; 
+        }
+        .horario-card {
+            background-color: #2E2C30;
+            border-radius: 8px;
+            box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2), 0 0 1rem rgba(0,0,0,0.2);
+            transition: background-color 0.2s;
+        }
+        .horario-card a {
+            text-decoration: none;
+            color: #FFFFFF;
+            font-weight: 500;
+            font-size: 1.1em;
+            display: block;
+            text-align: center;
+            padding: 15px 10px;
+        }
+        .horario-card:hover { background-color: #000000; }
+        .horario-card.empty {
+            grid-column: 1 / -1;
+            text-align: center; padding: 20px;
+            color: #999; background-color: #1E1E1E;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-card">
+        <div class="logo-container">
+            <h2>BarberSync</h2>
+            <img src="{% static 'agenda/img/logo_barbersync.png' %}" alt="Logo BarberSync">
+        </div>
+        
+        <a href="{% url 'selecionar_data' barbeiro.id servico.id %}" class="link-voltar">&larr; Trocar data</a>
+
+        <div class="info-card">
+            <span>{{ barbeiro.nome }}</span>
+            <strong>{{ servico.nome }}</strong>
+        </div>
+
+        <h1>Selecione um Horário para<br>{{ data_selecionada|date:"d/m/Y" }}</h1>
+
+        <ul class="horario-lista">
+            {% for horario in horarios %}
+            <li class="horario-card">
+                <a href="#">
+                    {{ horario.data_hora|time:"H:i" }}
+                </a>
+            </li>
+            {% empty %}
+                <li class="horario-card empty">
+                    Nenhum horário disponível para este dia.
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
