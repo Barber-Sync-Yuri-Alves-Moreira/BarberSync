@@ -1,4 +1,5 @@
 {% load static %}
+{# Removido: {% load tz %} e {% load agenda_extras %} #}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -9,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
     <title>Selecionar Horário</title>
     <style>
-
         body {
             font-family: 'Poppins', Arial, sans-serif;
             font-weight: 300; max-width: 600px; margin: 0 auto;
@@ -28,11 +28,10 @@
             text-align: center; color: #fff; font-size: 1.2em; text-transform: uppercase;
             letter-spacing: 1px; margin-bottom: 30px; font-weight: 500;
         }
-        .link-voltar { 
-            display: block; margin-bottom: 20px; text-align: center; 
+        .link-voltar {
+            display: block; margin-bottom: 20px; text-align: center;
             color: #00bfff; text-decoration: none; font-weight: 300;
         }
-
         .info-card {
             background-color: #1E1E1E; border-radius: 12px; margin-bottom: 20px;
             box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2), 0 0 1rem rgba(0,0,0,0.2);
@@ -43,16 +42,14 @@
         }
         .info-card span { font-size: 1.1em; font-weight: 500; }
         .info-card strong {
-            font-size: 1.1em; color: #00bfff; font-weight: 500; 
+            font-size: 1.1em; color: #00bfff; font-weight: 500;
         }
-
-
         .horario-lista {
             list-style: none;
             padding: 0;
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr; 
-            gap: 15px; 
+            grid-template-columns: 1fr 1fr 1fr 1fr; 
+            gap: 15px;
         }
         .horario-card {
             background-color: #2E2C30;
@@ -83,7 +80,7 @@
             <h2>BarberSync</h2>
             <img src="{% static 'agenda/img/logo_barbersync.png' %}" alt="Logo BarberSync">
         </div>
-        
+
         <a href="{% url 'selecionar_data' barbeiro.id servico.id %}" class="link-voltar">&larr; Trocar data</a>
 
         <div class="info-card">
@@ -94,10 +91,11 @@
         <h1>Selecione um Horário para<br>{{ data_selecionada|date:"d/m/Y" }}</h1>
 
         <ul class="horario-lista">
-            {% for horario in horarios %}
+            {# Agora 'horario' é só uma string HH:MM #}
+            {% for horario_str in horarios %}
             <li class="horario-card">
                 <a href="#">
-                    {{ horario.data_hora|time:"H:i" }}
+                    {{ horario_str }} {# Mostra a string HH:MM diretamente #}
                 </a>
             </li>
             {% empty %}
