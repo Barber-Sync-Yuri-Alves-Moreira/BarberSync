@@ -1,20 +1,18 @@
 from pathlib import Path
 import os
-import dj_database_url # Importa o pacote que instalamos
+import dj_database_url # Importa o helper do banco
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# 1. Lê a SECRET_KEY do Vercel. Você DEVE adicionar isso lá.
-# Use a sua chave antiga para manter a consistência
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-pg-m0)+*hyd7x*&6o6js68b$0qh7k)m)da_fp81om1!y)r$+y%')
 
-# 2. Lê o DEBUG. No Vercel, será 'False' por padrão.
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = 'VERCEL' not in os.environ
 
-# 3. Lê os hosts permitidos. O Vercel adiciona a URL do seu site automaticamente
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '.vercel.app').split(',')
-if 'VERCEL_URL' in os.environ and os.environ['VERCEL_URL'] not in ALLOWED_HOSTS:
-     ALLOWED_HOSTS.append(os.environ['VERCEL_URL'])
+if 'VERCEL_URL' in os.environ:
+    ALLOWED_HOSTS = [os.environ['VERCEL_URL'], '.vercel.app']
+else:
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
 
 INSTALLED_APPS = [
     'jazzmin',
@@ -42,7 +40,7 @@ ROOT_URLCONF = 'barbersync_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'templates'], 
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -57,25 +55,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'barbersync_project.wsgi.application'
 
-# 4. Configuração do Banco de Dados (Lê a variável do Vercel)
-DATABASES = {
-    'default': dj_database_url.config(
-        # Usa a variável POSTGRES_URL que o Vercel criou
-        default=os.environ.get('POSTGRES_URL'), 
-        conn_max_age=600,
-        ssl_require=True # Neon (o banco do Vercel) exige SSL
-    )
-}
-
-# Fallback para o banco local se a variável não existir (para rodar no seu PC)
-if not DATABASES['default']:
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'barbersync',
-        'USER': 'postgres',
-        'PASSWORD': 'postgre',
-        'HOST': 'localhost',
-        'PORT': '5432',
+if 'POSTGRES_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ['POSTGRES_URL'],
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
 
 
@@ -89,22 +82,19 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Bahia' 
 USE_I18N = True
-USE_TZ = True 
+USE_TZ = True
 
-# 5. Configuração de Estáticos para Vercel
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [ BASE_DIR / "static", ]
-STATIC_ROOT = BASE_DIR / "staticfiles_build" 
+STATIC_ROOT = BASE_DIR / "staticfiles_build"
 
 MEDIA_URL = '/media/'
-# ATENÇÃO: Uploads de mídia (fotos) NÃO funcionam de forma persistente no Vercel.
-# As fotos que você subir no admin vão sumir depois de um tempo.
-# O ideal é usar um serviço como o Amazon S3, mas para testes isso funciona:
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media_build') 
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media_build')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Configs do Jazzmin
+
 JAZZMIN_SETTINGS = {
     "site_title": "Cleber Barbearia", "site_header": "BarberSync", "site_brand": "BarberSync",
     "welcome_sign": "Bem-vindo ao BarberSync", "copyright": "BarberSync Ltd",
