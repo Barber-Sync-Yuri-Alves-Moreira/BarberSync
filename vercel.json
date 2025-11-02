@@ -31,8 +31,5 @@
       "src": "/(.*)",
       "dest": "barbersync_project/wsgi.py"
     }
-  ],
-  "scripts": {
-    "vercel-build": "python manage.py collectstatic --noinput && python manage.py migrate --noinput"
-  }
+  ]
 }
