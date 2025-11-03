@@ -98,7 +98,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# --- Configs do Jazzmin (Seu original) ---
 JAZZMIN_SETTINGS = {
     "site_title": "Cleber Barbearia", "site_header": "BarberSync", "site_brand": "BarberSync",
     "welcome_sign": "Bem-vindo ao BarberSync", "copyright": "BarberSync Ltd",
@@ -128,7 +127,6 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_legacy_style": False, "sidebar_nav_flat_style": True, "theme": "darkly",
     "dark_mode_theme": "darkly",
     
-    # Para o admin não carregar 50 JS
     "use_minified_js": True,
 
     "button_classes": {

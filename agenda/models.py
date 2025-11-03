@@ -41,7 +41,6 @@ class BarbeirosServicos(models.Model):
 class HorariosDisponiveis(models.Model):
     id_barbeiro = models.ForeignKey(Barbeiros, on_delete=models.CASCADE, verbose_name="Barbeiro")
     data_hora = models.DateTimeField(verbose_name="Data e Hora")
-    # NOVO CAMPO AQUI
     disponivel = models.BooleanField(default=True, verbose_name="Disponível") 
     
     def __str__(self):
@@ -54,32 +53,25 @@ class HorariosDisponiveis(models.Model):
         verbose_name_plural = "Horários Disponíveis"
         unique_together = ('id_barbeiro', 'data_hora')
 
-# NOVO MODELO (Agendamentos)
 class Agendamentos(models.Model):
-    # Campos de ligação
-    # O Agendamento é ligado ao horário, e através dele, ao barbeiro.
     horario = models.OneToOneField(
         'HorariosDisponiveis', 
         on_delete=models.CASCADE, 
         verbose_name="Horário Reservado"
     )
-    # O Agendamento também precisa saber qual serviço foi feito para o cliente
     servico = models.ForeignKey(
         'Servicos', 
         on_delete=models.PROTECT, 
         verbose_name="Serviço Agendado"
     )
     
-    # Campos do Cliente
     nome_cliente = models.CharField(max_length=100)
     telefone_cliente = models.CharField(max_length=15)
-    cpf_cliente = models.CharField(max_length=14, blank=True, null=True) # Opcional
+    cpf_cliente = models.CharField(max_length=14, blank=True, null=True) 
     
-    # Campo de controle (opcional, mas bom ter)
-    data_agendamento = models.DateTimeField(auto_now_add=True) # Data da criação do registro
+    data_agendamento = models.DateTimeField(auto_now_add=True) 
     
     def __str__(self):
-        # Exibe o nome do cliente, o serviço e o horário agendado
         barbeiro_nome = self.horario.id_barbeiro.nome if self.horario and self.horario.id_barbeiro else 'Barbeiro Desconhecido'
         data_hora = self.horario.data_hora.strftime('%d/%m %H:%M') if self.horario else 'Hora Desconhecida'
         return f"{self.nome_cliente} para {self.servico.nome} com {barbeiro_nome} às {data_hora}"

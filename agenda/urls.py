@@ -10,11 +10,9 @@ urlpatterns = [
     path('agendar/<int:barbeiro_id>/<int:servico_id>/<str:data>/', 
          views.selecionar_horario, name='selecionar_horario'),
     
-    # 🌟 NOVA ROTA 1: Página para coletar os dados do cliente e finalizar o agendamento
     path('agendar/<int:barbeiro_id>/<int:servico_id>/<int:horario_id>/dados_cliente/', 
          views.dados_cliente, name='dados_cliente'), 
          
-    # 🌟 NOVA ROTA 2: Página de confirmação final
     path('confirmacao/<int:agendamento_id>/', 
          views.confirmacao, name='confirmacao'),
 ]
