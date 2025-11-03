@@ -1,5 +1,4 @@
 {% load static %}
-{# Removido: {% load tz %} e {% load agenda_extras %} #}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -10,67 +9,166 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
     <title>Selecionar Horário</title>
     <style>
+        /* CENTRALIZAÇÃO HORIZONTAL E VERTICAL */
         body {
             font-family: 'Poppins', Arial, sans-serif;
-            font-weight: 300; max-width: 600px; margin: 0 auto;
-            padding: 20px 10px; background-color: #1E1E1E; color: #fff;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 10px;
+            background-color: #1E1E1E;
+            color: #fff;
+
+            /* REGRAS PARA CENTRALIZAÇÃO VERTICAL */
+            min-height: 100vh;
+            display: flex;
+            align-items: center; /* Centraliza verticalmente o conteúdo */
+            justify-content: center;
+            flex-direction: column;
         }
         .main-card {
-            background-color: #1E1E1E; border-radius: 12px; padding: 20px;
+            background-color: #1E1E1E;
+            border-radius: 12px;
+            padding: 20px;
             box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2), 0 0 1rem rgba(0,0,0,0.2);
+            margin: 20px auto;
+            width: 100%;
+            box-sizing: border-box;
         }
+        
         .logo-container { text-align: center; padding: 20px 0; }
         .logo-container h2 { margin: 0; font-size: 2em; font-weight: 500; }
         .logo-container img {
             max-width: 170px; height: auto; margin-top: 10px; border-radius: 8px;
         }
+
         h1 {
-            text-align: center; color: #fff; font-size: 1.2em; text-transform: uppercase;
-            letter-spacing: 1px; margin-bottom: 30px; font-weight: 500;
+            text-align: center;
+            color: #fff;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            font-weight: 500;
         }
+
+        /* Link Voltar (Padrão Ciano) */
         .link-voltar {
-            display: block; margin-bottom: 20px; text-align: center;
-            color: #00bfff; text-decoration: none; font-weight: 300;
+            display: block; 
+            margin: 0 auto 20px auto; 
+            width: fit-content; 
+            color: #00bfff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
         }
-        .info-card {
-            background-color: #1E1E1E; border-radius: 12px; margin-bottom: 20px;
-            box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2), 0 0 1rem rgba(0,0,0,0.2);
-            padding: 20px;
+        .link-voltar:hover {
+            color: #ffa07a; 
+        }
+
+        /* --- CARD DO BARBEIRO (RESTAURADO COM FOTO) --- */
+        .barbeiro-selecionado-card {
+            background-color: #2A2A2A; 
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            display: flex; 
+            align-items: center; 
+            padding: 15px; 
+            box-sizing: border-box;
+            box-shadow: 0 .15rem .15rem rgba(0,0,0,0.1), 0 0 0.5rem rgba(0,0,0,0.1);
+        }
+        .barbeiro-imagem-container {
+            width: 80px; 
+            height: 80px;
+            border-radius: 50%; 
+            overflow: hidden;
+            flex-shrink: 0; 
+            margin-right: 15px;
+            background-color: #444; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .barbeiro-imagem-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .barbeiro-imagem-container .placeholder {
+            font-size: 0.8em;
+            color: #888;
+            text-align: center;
+        }
+        .barbeiro-conteudo h3 {
+            margin: 0;
+            font-size: 1.3em;
+            font-weight: 500;
+            color: #00bfff;
+        }
+        
+        /* --- CARD DO SERVIÇO (RESTAURADO COM PREÇO) --- */
+        .servico-card {
+            background-color: #2A2A2A; 
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 .15rem .15rem rgba(0,0,0,0.1), 0 0 0.5rem rgba(0,0,0,0.1);
+            padding: 15px;
+            border-left: 5px solid #00bfff; /* Filete Lateral Ciano */
+        }
+        .servico-card-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .info-card span { font-size: 1.1em; font-weight: 500; }
-        .info-card strong {
-            font-size: 1.1em; color: #00bfff; font-weight: 500;
+        .servico-card span {
+            font-size: 1em;
+            font-weight: 500;
+            color: #f0f0f0;
         }
+        .servico-card strong {
+            color: #00bfff;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+
+        /* Lista de Horários */
         .horario-lista {
             list-style: none;
             padding: 0;
+            margin: 0;
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr; 
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); 
+            gap: 10px;
         }
         .horario-card {
-            background-color: #2E2C30;
+            background-color: #2A2A2A;
             border-radius: 8px;
-            box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2), 0 0 1rem rgba(0,0,0,0.2);
-            transition: background-color 0.2s;
+            box-shadow: 0 .15rem .15rem rgba(0,0,0,0.1);
+            position: relative;
+            border-left: 5px solid #00bfff;
+            transition: transform 0.2s ease, background-color 0.2s;
+        }
+        .horario-card:hover {
+            transform: translateY(-3px);
+            background-color: #383838;
         }
         .horario-card a {
             text-decoration: none;
-            color: #FFFFFF;
+            color: #00bfff;
             font-weight: 500;
             font-size: 1.1em;
             display: block;
             text-align: center;
             padding: 15px 10px;
         }
-        .horario-card:hover { background-color: #000000; }
         .horario-card.empty {
             grid-column: 1 / -1;
             text-align: center; padding: 20px;
-            color: #999; background-color: #1E1E1E;
+            color: #999; 
+            background-color: #2A2A2A;
+            border-left: none;
         }
     </style>
 </head>
@@ -83,25 +181,41 @@
 
         <a href="{% url 'selecionar_data' barbeiro.id servico.id %}" class="link-voltar">&larr; Trocar data</a>
 
-        <div class="info-card">
-            <span>{{ barbeiro.nome }}</span>
-            <strong>{{ servico.nome }}</strong>
+        <div class="barbeiro-selecionado-card">
+            <div class="barbeiro-imagem-container">
+                {% if barbeiro.imagem %}
+                    <img src="{{ barbeiro.imagem.url }}" alt="{{ barbeiro.nome }}">
+                {% else %}
+                    <span class="placeholder">Sem Foto</span>
+                {% endif %}
+            </div>
+            <div class="barbeiro-conteudo">
+                <h3>{{ barbeiro.nome }}</h3>
+            </div>
+        </div>
+        
+        <div class="servico-card">
+            <div class="servico-card-content">
+                <span>{{ servico.nome }}</span>
+                {% if servico.preco %}
+                    <strong>R$ {{ servico.preco|floatformat:2 }}</strong>
+                {% endif %}
+            </div>
         </div>
 
         <h1>Selecione um Horário para<br>{{ data_selecionada|date:"d/m/Y" }}</h1>
 
         <ul class="horario-lista">
-            {# Agora 'horario' é só uma string HH:MM #}
-            {% for horario_str in horarios %}
+            {% for horario_dict in horarios %}
             <li class="horario-card">
-                <a href="#">
-                    {{ horario_str }} {# Mostra a string HH:MM diretamente #}
+                <a href="{% url 'dados_cliente' barbeiro.id servico.id horario_dict.id %}">
+                    {{ horario_dict.hora_str }}
                 </a>
             </li>
             {% empty %}
-                <li class="horario-card empty">
-                    Nenhum horário disponível para este dia.
-                </li>
+            <li class="horario-card empty">
+                Nenhum horário disponível para esta data.
+            </li>
             {% endfor %}
         </ul>
     </div>

@@ -1,0 +1,158 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <title>Dados do Cliente</title>
+    <style>
+        /* --- CENTRALIZAÇÃO VERTICAL E TEMA CIANO --- */
+        body { 
+            font-family: 'Poppins', Arial, sans-serif; 
+            font-weight: 300; 
+            max-width: 600px; 
+            margin: 0 auto; 
+            padding: 0 10px;
+            background-color: #1E1E1E; 
+            color: #fff;
+            
+            /* CENTRALIZAÇÃO VERTICAL: OBRIGATÓRIO PARA FICAR NO MEIO DA TELA */
+            min-height: 100vh;
+            display: flex;
+            align-items: center; /* Centraliza verticalmente o conteúdo */
+            justify-content: center;
+            flex-direction: column;
+        }
+        .main-card { 
+            background-color: #1E1E1E; 
+            border-radius: 12px; 
+            padding: 20px; 
+            box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2), 0 0 1rem rgba(0,0,0,0.2); 
+            width: 100%;
+            box-sizing: border-box;
+            margin: 20px auto; 
+        }
+        .logo-container { text-align: center; padding: 20px 0; }
+        .logo-container h2 { margin: 0; font-size: 2em; font-weight: 500; }
+        .logo-container img { max-width: 100px; margin-top: 10px; }
+        h1 { font-size: 1.6em; font-weight: 500; margin-bottom: 20px; text-align: center; }
+        
+        /* Link Voltar (CIANO) */
+        .link-voltar { 
+            display: block; 
+            margin: 0 auto 20px auto; 
+            width: fit-content; 
+            color: #00bfff;
+            text-decoration: none; 
+            font-weight: 500; 
+            font-size: 1em; 
+            transition: color 0.2s;
+        }
+        .link-voltar:hover { color: #ffa07a; }
+
+        /* Cartão de Informação (CIANO) */
+        .info-card { 
+            background-color: #2A2A2A; 
+            border-radius: 8px; 
+            padding: 15px; 
+            margin-bottom: 20px; 
+            border-left: 5px solid #00bfff; /* Filete CIANO */
+        }
+        .info-card span { display: block; font-size: 0.9em; color: #ccc; }
+        .info-card strong { 
+            font-size: 1.2em; 
+            font-weight: 500; 
+            color: #00bfff; /* Texto em CIANO */
+            display: block; 
+            margin-top: 5px; 
+        }
+
+        /* Estilos do Formulário */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 300; color: #fff; }
+        input[type="text"], input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background-color: #2a2a2a;
+            color: #fff;
+            box-sizing: border-box; 
+            font-size: 1em;
+        }
+        input::placeholder { color: #888; }
+        
+        /* Botão Submit (CIANO) */
+        .btn-submit {
+            width: 100%;
+            background-color: #00bfff; /* Cor CIANO */
+            color: #fff;
+            padding: 15px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        .btn-submit:hover { background-color: #0099e6; }
+        
+        /* Estilo das Mensagens (Padrão Django) */
+        .messages { padding: 10px; margin-bottom: 15px; border-radius: 4px; font-weight: 500; }
+        .messages.success { background-color: #4CAF50; color: white; }
+        .messages.error { background-color: #F44336; color: white; }
+    </style>
+</head>
+<body>
+    <div class="main-card">
+        <div class="logo-container">
+            <h2>BarberSync</h2>
+            <img src="{% static 'agenda/img/logo_barbersync.png' %}" alt="Logo BarberSync">
+        </div>
+
+        <a href="{% url 'selecionar_horario' barbeiro.id servico.id horario.data_hora|date:'Y-m-d' %}" class="link-voltar">&larr; Trocar horário</a>
+
+        <div class="info-card">
+            <span>Barbeiro: {{ barbeiro.nome }}</span>
+            <span>Serviço: {{ servico.nome }}</span>
+            <strong>Horário: {{ horario.data_hora|date:"d/m/Y H:i" }}</strong>
+        </div>
+
+        <h1>Dados para o Agendamento</h1>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="messages {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'dados_cliente' barbeiro.id servico.id horario.id %}">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_nome_cliente">Seu Nome Completo:</label>
+                <input type="text" id="id_nome_cliente" name="nome_cliente" required maxlength="100" placeholder="Ex: João da Silva">
+            </div>
+
+            <div class="form-group">
+                <label for="id_telefone_cliente">Telefone (WhatsApp):</label>
+                <input type="tel" id="id_telefone_cliente" name="telefone_cliente" required maxlength="15" placeholder="Ex: (99) 99999-9999">
+            </div>
+
+            <div class="form-group">
+                <label for="id_cpf_cliente">CPF (Opcional):</label>
+                <input type="text" id="id_cpf_cliente" name="cpf_cliente" maxlength="14" placeholder="Opcional">
+            </div>
+
+            <button type="submit" class="btn-submit">Finalizar Agendamento</button>
+        </form>
+    </div>
+</body>
+</html>

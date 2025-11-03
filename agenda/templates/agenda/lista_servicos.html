@@ -9,22 +9,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
     <title>Selecionar Serviço</title>
     <style>
+        /* REGRA DE CENTRALIZAÇÃO HORIZONTAL E VERTICAL */
         body {
             font-family: 'Poppins', Arial, sans-serif;
             font-weight: 300;
             max-width: 600px;
             margin: 0 auto;
-            padding: 20px 10px;
+            padding: 0 10px; /* Reduzindo padding, pois o main-card terá margin */
             background-color: #1E1E1E;
             color: #fff;
+            
+            /* NOVAS REGRAS PARA CENTRALIZAÇÃO VERTICAL */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
         }
         .main-card {
-            background-color: #1E1E1E;
+            background-color: #1E1E1E; 
             border-radius: 12px;
             padding: 20px;
             box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2),
                         0 0 1rem rgba(0,0,0,0.2);
+            margin: 20px auto; /* Adiciona margin vertical */
+            width: 100%;
+            box-sizing: border-box;
         }
+        /* ... (Restante do CSS) ... */
         .logo-container {
             text-align: center;
             padding: 20px 0;
@@ -35,7 +47,7 @@
             font-weight: 500;
         }
         .logo-container img {
-            max-width: 170px;
+            max-width: 170px; 
             height: auto;
             margin-top: 10px;
             border-radius: 8px;
@@ -49,109 +61,92 @@
             margin-bottom: 30px;
             font-weight: 500;
         }
+        
         .link-voltar {
-            display: block;
-            margin-bottom: 20px;
-            text-align: center;
-            color: #00bfff;
+            display: block; 
+            margin: 0 auto 20px auto; 
+            width: fit-content; 
+            color: #00bfff; /* Cor ciano */
             text-decoration: none;
-            font-weight: 300;
+            font-weight: 500;
+            transition: color 0.2s;
         }
+
+        .link-voltar:hover {
+            color: #ffa07a; 
+        }
+        
+        /* CARD DO BARBEIRO SELECIONADO */
         .barbeiro-selecionado-card {
-            background-color: #1E1E1E;
-            border-radius: 12px;
+            background-color: #2A2A2A; 
+            border-radius: 8px;
             margin-bottom: 30px;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            padding: 0 15px 0 0;
+            display: flex; 
+            align-items: center; 
+            padding: 15px; 
             box-sizing: border-box;
-            min-height: 140px;
-            box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2),
-                        0 0 1rem rgba(0,0,0,0.2);
+            box-shadow: 0 .15rem .15rem rgba(0,0,0,0.1), 0 0 0.5rem rgba(0,0,0,0.1);
         }
-        .barbeiro-selecionado-card .barbeiro-imagem {
-            width: 140px;
-            height: 140px;
+
+        /* Imagem circular do barbeiro */
+        .barbeiro-imagem-container {
+            width: 100px; 
+            height: 100px;
+            border-radius: 50%; /* Imagem Circular */
             overflow: hidden;
-            flex-shrink: 0;
-            margin-left: -20px;
-            border: none;
-            border-top-right-radius: 50%;
-            border-bottom-right-radius: 50%;
-            background-color: #1E1E1E;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-        }
-        .barbeiro-selecionado-card .barbeiro-imagem img {
-            width: 140px;
-            height: 140px;
-            object-fit: cover;
-            border-radius: 0;
-        }
-        .barbeiro-selecionado-card .placeholder-imagem {
-            width: 140px;
-            height: 140px;
-            background-color: #555;
+            flex-shrink: 0; 
+            margin-right: 20px;
+            background-color: #444; 
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        .barbeiro-imagem-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .barbeiro-imagem-container .placeholder {
             font-size: 0.8em;
-            color: #999;
-            border: none;
-            border-top-right-radius: 50%;
-            border-bottom-right-radius: 50%;
-            margin-left: -70px;
+            color: #888;
+            text-align: center;
         }
-        .barbeiro-selecionado-card .barbeiro-conteudo {
-            flex-grow: 1;
-            padding-left: 20px;
-            padding-top: 15px;
-            padding-bottom: 15px;
-            min-width: 0;
+
+        .barbeiro-conteudo {
+            flex-grow: 1; 
         }
-        .barbeiro-selecionado-card .barbeiro-conteudo h3 {
+        .barbeiro-conteudo h3 {
             margin: 0 0 5px 0;
-            font-size: 1.3em;
-            text-align: left;
+            font-size: 1.4em;
             font-weight: 500;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+            color: #00bfff; /* Nome do barbeiro em ciano */
         }
-        .barbeiro-selecionado-card .barbeiro-conteudo p {
+        .barbeiro-conteudo p {
             margin: 0;
             font-size: 0.9em;
             color: #ccc;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+            line-height: 1.4;
         }
-        .barbeiro-selecionado-card.no-image .barbeiro-imagem,
-        .barbeiro-selecionado-card.no-image .placeholder-imagem {
-            display: none;
-        }
-        .barbeiro-selecionado-card.no-image .barbeiro-conteudo {
-            padding-left: 20px;
-            padding-top: 20px;
-            padding-bottom: 20px;
-        }
-        .barbeiro-selecionado-card.no-image {
-             min-height: auto;
-        }
+
+        /* LISTA DE SERVIÇOS */
         .servico-lista {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
         .servico-card {
-            background-color: #1E1E1E;
-            border-radius: 12px;
+            background-color: #2A2A2A; 
+            border-radius: 8px;
             margin-bottom: 15px;
-            box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2),
-                        0 0 1rem rgba(0,0,0,0.2);
+            box-shadow: 0 .15rem .15rem rgba(0,0,0,0.1), 0 0 0.5rem rgba(0,0,0,0.1);
+            position: relative;
+            border-left: 5px solid #00bfff; /* FILETE LATERAL CIANO */
+            transition: transform 0.2s ease;
+        }
+        .servico-card:hover {
+            transform: translateY(-3px);
+            background-color: #383838; 
         }
         .servico-card a {
             text-decoration: none;
@@ -159,8 +154,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px;
-            width: 100%;
+            padding: 20px; 
             box-sizing: border-box;
         }
         .servico-card span {
@@ -173,13 +167,15 @@
         }
         .servico-card strong {
             font-size: 1.1em;
-            color: #00bfff;
+            color: #00bfff; /* Preço em ciano */
             font-weight: 500;
             flex-basis: 35%;
             text-align: right;
             flex-shrink: 0;
             min-width: 0;
         }
+
+        /* Estilo para a mensagem de erro */
         .error {
             background-color: #c93744;
             color: #ffffff; 
@@ -217,24 +213,21 @@
 
         <a href="{% url 'lista_barbeiros' %}" class="link-voltar">&larr; Trocar profissional</a>
 
-        <div class="barbeiro-selecionado-card {% if not barbeiro.imagem %}no-image{% endif %}">
-            {% if barbeiro.imagem %}
-                <div class="barbeiro-imagem">
+        <div class="barbeiro-selecionado-card">
+            <div class="barbeiro-imagem-container">
+                {% if barbeiro.imagem %}
                     <img src="{{ barbeiro.imagem.url }}" alt="{{ barbeiro.nome }}">
-                </div>
-            {% else %}
-                <div class="placeholder-imagem">Sem Foto</div>
-            {% endif %}
-            <div class="barbeiro-conteudo">
-                <h3>{{ barbeiro.nome }}</h3>
-                {% if barbeiro.descricao %}
-                    <p>{{ barbeiro.descricao }}</p>
                 {% else %}
-                    <p>Profissional especialista.</p>
+                    <span class="placeholder">Sem Foto</span>
                 {% endif %}
             </div>
+            <div class="barbeiro-conteudo">
+                <h3>{{ barbeiro.nome }}</h3>
+                <p>{{ barbeiro.descricao|default:"Profissional dedicado a realçar seu estilo com cortes precisos." }}</p>
+            </div>
         </div>
-        <h1>Selecione o Serviço</h1>
+        
+        <h1>SELECIONE O SERVIÇO</h1>
 
         <ul class="servico-lista">
             {% for servico in servicos %}
@@ -249,7 +242,7 @@
             {% empty %}
                 <div class="error">
                     <div class="error__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none"><path fill="#ffffff" d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z"></path></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" height="24" fill="none"><path fill="#ffffff" d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-2.65216-1.0536-5.1957-2.9289-7.07107-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z"></path></svg>
                     </div>
                     <div class="error__title">Este profissional não possui serviços cadastrados.</div>
                 </div>

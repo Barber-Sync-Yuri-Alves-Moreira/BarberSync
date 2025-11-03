@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # --- 100% LOCAL (CONFIGURAÇÃO ORIGINAL) ---
 SECRET_KEY = 'django-insecure-pg-m0)+*hyd7x*&6o6js68b$0qh7k)m)da_fp81om1!y)r$+y%'
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost'] # CORRIGE O ERRO 'DisallowedHost'
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost'] 
 # --- FIM ---
 
 INSTALLED_APPS = [
@@ -17,7 +17,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'agenda',
+    'agenda', # Seu app
 ]
 
 MIDDLEWARE = [
@@ -35,7 +35,7 @@ ROOT_URLCONF = 'barbersync_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'], # Usando a pasta de templates global
+        'DIRS': [BASE_DIR / 'templates'], 
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -50,14 +50,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'barbersync_project.wsgi.application'
 
-# --- BANCO DE DADOS POSTGRES LOCAL (O SEU ORIGINAL) ---
+# --- BANCO DE DADOS POSTGRES LOCAL (Seu original) ---
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'barbersync',    # O nome do seu banco
-        'USER': 'postgres',     # Seu usuário do Postgres
-        'PASSWORD': 'postgre',  # Sua senha do Postgres
-        'HOST': 'localhost',    # Rodando no seu PC
+        'NAME': 'barbersync',      
+        'USER': 'postgres',      
+        'PASSWORD': 'postgre',    
+        'HOST': 'localhost',      
         'PORT': '5432',
     }
 }
@@ -71,20 +71,34 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = 'pt-br'
-TIME_ZONE = 'America/Bahia' 
-USE_I18N = True
-USE_TZ = True 
 
-# Estáticos (Configuração local)
+# Fuso horário para sua região
+TIME_ZONE = 'America/Bahia' 
+
+USE_I18N = True
+USE_TZ = True # Essencial para o Django lidar com horários
+
+# Estáticos (Configuração FINAL e CORRETA)
+# -----------------------------------------------------------------
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [ BASE_DIR / "static", ]
+
+# Diretórios para BUSCA de arquivos estáticos (Seu CSS customizado está aqui)
+STATICFILES_DIRS = [ 
+    BASE_DIR / "static", 
+    os.path.join(BASE_DIR, 'agenda/static'), # Adicionado para garantir
+]
+
+# Diretório final para onde o 'collectstatic' COPIA TUDO
+# ESTA LINHA CORRIGE O ERRO "ImproperlyConfigured"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
+# -----------------------------------------------------------------
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Configs do Jazzmin
+# --- Configs do Jazzmin (Seu original) ---
 JAZZMIN_SETTINGS = {
     "site_title": "Cleber Barbearia", "site_header": "BarberSync", "site_brand": "BarberSync",
     "welcome_sign": "Bem-vindo ao BarberSync", "copyright": "BarberSync Ltd",
@@ -113,6 +127,10 @@ JAZZMIN_UI_TWEAKS = {
     "sidebar_nav_child_indent": False, "sidebar_nav_compact_style": False,
     "sidebar_nav_legacy_style": False, "sidebar_nav_flat_style": True, "theme": "darkly",
     "dark_mode_theme": "darkly",
+    
+    # Para o admin não carregar 50 JS
+    "use_minified_js": True,
+
     "button_classes": {
         "primary": "btn-primary", "secondary": "btn-secondary", "info": "btn-info",
         "warning": "btn-warning", "danger": "btn-danger", "success": "btn-success"

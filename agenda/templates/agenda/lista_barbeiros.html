@@ -10,6 +10,7 @@
     
     <title>Selecionar Profissional</title>
     <style>
+        /* REGRA DE CENTRALIZAÇÃO HORIZONTAL E VERTICAL */
         body {
             font-family: 'Poppins', Arial, sans-serif;
             font-weight: 300;
@@ -18,14 +19,28 @@
             padding: 20px 10px; 
             background-color: #1E1E1E; 
             color: #FFFFFF; 
+            
+            /* NOVAS REGRAS PARA CENTRALIZAÇÃO VERTICAL */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column; /* Garante que o conteúdo flua normalmente */
         }
         .main-card {
             background-color: #1E1E1E;
             border-radius: 12px;
+            /* Removido o padding do body para usar o padding do main-card */
             padding: 20px;
             box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2),
                         0 0 1rem rgba(0,0,0,0.2);
+            /* Opcional: Adiciona margin vertical para evitar que toque nas bordas se for maior que a tela */
+            margin: 20px auto; 
+            width: 100%; /* Ajuste para preencher a largura máxima do body */
+            box-sizing: border-box;
         }
+        
+        /* ... (Restante do CSS, sem alterações significativas) ... */
 
         .logo-container {
             text-align: center;
@@ -37,17 +52,16 @@
             font-size: 2em;
             font-weight: 500;
         }
-
         .logo-container img {
-            max-width: 170px; 
+            max-width: 170px;
             height: auto;
-            margin-top: 10px; 
+            margin-top: 10px;
             border-radius: 8px;
         }
 
         h1 {
             text-align: center;
-            color: #FFFFFF; 
+            color: #fff;
             font-size: 1.2em;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -55,123 +69,72 @@
             font-weight: 500;
         }
 
+        /* LISTA E CARDS DE BARBEIROS */
         .barbeiro-lista {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
         .barbeiro-card {
-            background-color: #1E1E1E; 
-            border-radius: 12px;
-            margin-bottom: 20px;
-            overflow: hidden; 
-            box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2),
-                        0 0 1rem rgba(0,0,0,0.2);
-            position: relative; 
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            padding: 0 15px 0 0; 
-            box-sizing: border-box; 
-            min-height: 140px; 
+            background-color: #2A2A2A; 
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 .15rem .15rem rgba(0,0,0,0.1), 0 0 0.5rem rgba(0,0,0,0.1);
+            position: relative;
+            border-left: 5px solid #00bfff; /* Filete Lateral Ciano */
+            transition: transform 0.2s ease;
         }
-    
-        .barbeiro-card:active {
-            scale: 0.95;
+        .barbeiro-card:hover {
+            transform: translateY(-3px);
+            background-color: #383838;
         }
-
-
         .barbeiro-card a {
             text-decoration: none;
-            color: #FFFFFF; 
-            display: contents;
-        }
-
-        .barbeiro-imagem {
-            width: 140px; 
-            height: 140px; 
-            overflow: hidden; 
-            flex-shrink: 0; 
-            margin-left: -20px; 
-            border: none; 
-            border-top-right-radius: 50%;
-            border-bottom-right-radius: 50%;
-            background-color: #1E1E1E; 
+            color: #fff;
             display: flex;
-            align-items: center;
-            justify-content: flex-end;
+            align-items: center; 
+            padding: 15px; 
         }
 
-        .barbeiro-imagem img {
-            width: 140px; 
-            height: 140px;
-            object-fit: cover;
-            border-radius: 0; 
-            margin-left: 0; 
-        }
-
-        .placeholder-imagem {
-            width: 140px; 
-            height: 140px; 
-            background-color: #444444; 
+        /* Imagem redonda */
+        .barbeiro-imagem, .placeholder-imagem {
+            width: 80px; 
+            height: 80px;
+            border-radius: 50%; /* Imagem redonda */
+            overflow: hidden;
+            flex-shrink: 0;
+            margin-right: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
+            background-color: #444; 
             font-size: 0.8em;
-            color: rgba(255, 255, 255, 0.7); 
-            border: none; 
-            border-top-right-radius: 50%;
-            border-bottom-right-radius: 50%;
-            margin-left: -70px; 
-            flex-shrink: 0;
-            border-radius: 0; 
+            color: #888;
         }
-
+        .barbeiro-imagem img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
         .barbeiro-conteudo {
-            flex-grow: 1; 
-            padding-left: 20px; 
-            padding-top: 15px; 
-            padding-bottom: 15px; 
+            flex-grow: 1;
         }
-
         .barbeiro-conteudo h3 {
             margin: 0 0 5px 0;
-            font-size: 1.3em;
-            text-align: left; 
+            font-size: 1.2em;
             font-weight: 500;
-            color: #FFFFFF; 
+            color: #00bfff; /* Nome em Ciano */
         }
-        
         .barbeiro-conteudo p {
             margin: 0;
-            font-size: 0.9em;
-            color: #fafafad2; 
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            font-size: 0.85em;
+            color: #ccc;
         }
-
-
-        .barbeiro-card.no-image .barbeiro-imagem,
-        .barbeiro-card.no-image .placeholder-imagem {
-            display: none;
-        }
-        .barbeiro-card.no-image .barbeiro-conteudo {
-            padding-left: 20px; 
-            padding-top: 20px;
-            padding-bottom: 20px;
-        }
-        .barbeiro-card.no-image {
-             min-height: auto;
-        }
-
     </style>
 </head>
 <body>
-
     <div class="main-card">
-
         <div class="logo-container">
             <h2>BarberSync</h2>
             <img src="{% static 'agenda/img/logo_barbersync.png' %}" alt="Logo BarberSync">
@@ -204,7 +167,7 @@
                 </a>
             </li>
             {% empty %}
-                <li class="barbeiro-card no-image" style="justify-content: center; padding: 20px; color: #999;">
+                <li class="barbeiro-card" style="justify-content: center; padding: 20px; color: #999; border-left: none;">
                     Nenhum barbeiro cadastrado.
                 </li>
             {% endfor %}
