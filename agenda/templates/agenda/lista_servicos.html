@@ -9,17 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
     <title>Selecionar Serviço</title>
     <style>
-        /* REGRA DE CENTRALIZAÇÃO HORIZONTAL E VERTICAL */
+
         body {
             font-family: 'Poppins', Arial, sans-serif;
             font-weight: 300;
             max-width: 600px;
             margin: 0 auto;
-            padding: 0 10px; /* Reduzindo padding, pois o main-card terá margin */
+            padding: 0 10px; 
             background-color: #1E1E1E;
             color: #fff;
-            
-            /* NOVAS REGRAS PARA CENTRALIZAÇÃO VERTICAL */
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -32,11 +30,11 @@
             padding: 20px;
             box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2),
                         0 0 1rem rgba(0,0,0,0.2);
-            margin: 20px auto; /* Adiciona margin vertical */
+            margin: 20px auto;
             width: 100%;
             box-sizing: border-box;
         }
-        /* ... (Restante do CSS) ... */
+
         .logo-container {
             text-align: center;
             padding: 20px 0;
@@ -66,17 +64,17 @@
             display: block; 
             margin: 0 auto 20px auto; 
             width: fit-content; 
-            color: #00bfff; /* Cor ciano */
+            color: #00bfff; 
             text-decoration: none;
             font-weight: 500;
             transition: color 0.2s;
         }
 
         .link-voltar:hover {
-            color: #ffa07a; 
+            color: #ffffff; 
         }
         
-        /* CARD DO BARBEIRO SELECIONADO */
+
         .barbeiro-selecionado-card {
             background-color: #2A2A2A; 
             border-radius: 8px;
@@ -89,11 +87,11 @@
             box-shadow: 0 .15rem .15rem rgba(0,0,0,0.1), 0 0 0.5rem rgba(0,0,0,0.1);
         }
 
-        /* Imagem circular do barbeiro */
+
         .barbeiro-imagem-container {
             width: 100px; 
             height: 100px;
-            border-radius: 50%; /* Imagem Circular */
+            border-radius: 50%;
             overflow: hidden;
             flex-shrink: 0; 
             margin-right: 20px;
@@ -120,7 +118,7 @@
             margin: 0 0 5px 0;
             font-size: 1.4em;
             font-weight: 500;
-            color: #00bfff; /* Nome do barbeiro em ciano */
+            color: #00bfff;
         }
         .barbeiro-conteudo p {
             margin: 0;
@@ -128,8 +126,6 @@
             color: #ccc;
             line-height: 1.4;
         }
-
-        /* LISTA DE SERVIÇOS */
         .servico-lista {
             list-style: none;
             padding: 0;
@@ -141,7 +137,7 @@
             margin-bottom: 15px;
             box-shadow: 0 .15rem .15rem rgba(0,0,0,0.1), 0 0 0.5rem rgba(0,0,0,0.1);
             position: relative;
-            border-left: 5px solid #00bfff; /* FILETE LATERAL CIANO */
+            border-left: 5px solid #00bfff;
             transition: transform 0.2s ease;
         }
         .servico-card:hover {
@@ -167,7 +163,7 @@
         }
         .servico-card strong {
             font-size: 1.1em;
-            color: #00bfff; /* Preço em ciano */
+            color: #00bfff; 
             font-weight: 500;
             flex-basis: 35%;
             text-align: right;
@@ -175,7 +171,7 @@
             min-width: 0;
         }
 
-        /* Estilo para a mensagem de erro */
+
         .error {
             background-color: #c93744;
             color: #ffffff; 

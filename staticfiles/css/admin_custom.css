@@ -1,0 +1,80 @@
+
+
+
+body, #content-main, .card, .card-body, .module {
+    background-color: #2A2A2A !important;
+    color: #fff !important;
+}
+
+
+.card-header, .module caption, .app-list .card-header {
+    background-color: #333 !important;
+    border-bottom: 1px solid #444 !important;
+}
+
+
+.row1 { background-color: #333 !important; }
+.row2 { background-color: #3a3a3a !important; } 
+#changelist-form .results thead th {
+    background-color: #444 !important;
+    border-color: #555 !important;
+}
+input[type="text"], input[type="password"], input[type="email"], 
+input[type="number"], input[type="url"], input[type="tel"], 
+select, textarea {
+    background-color: #444 !important;
+    border: 1px solid #555 !important;
+    color: #fff !important;
+}
+
+
+body, p, h1, h2, h3, h4, h5, .card-title, .app-list a, .module h2 a {
+    color: #ffffff !important;
+}
+
+
+a:hover, .app-list a:hover, .module h2 a:hover {
+    color: #bbbbbb !important; 
+}
+
+
+
+.submit-row input[name="_continue"],
+.submit-row input[name="_addanother"] {
+    display: none !important;
+}
+
+
+
+.submit-row input[name="_save"], 
+.submit-row input.default, 
+.btn-success { 
+    background-color: #5CB85C !important; 
+    color: #ffffff !important;
+    border: none;
+}
+.submit-row input[name="_save"]:hover,
+.submit-row input.default:hover {
+    background-color: #4a9d4a !important; 
+}
+
+
+.submit-row a.deletelink, 
+.btn-danger {
+    background: #F44336 !important; 
+    color: #ffffff !important;
+    border: none;
+}
+.submit-row a.deletelink:hover {
+    background: #d32f2f !important; 
+}
+
+
+
+#changelist-form .button.default {
+    background: #5CB85C !important; 
+    color: #ffffff !important;
+}
+#changelist-form .button.default:hover {
+    background: #4a9d4a !important;
+}

@@ -3,11 +3,10 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# --- 100% LOCAL (CONFIGURAÇÃO ORIGINAL) ---
+
 SECRET_KEY = 'django-insecure-pg-m0)+*hyd7x*&6o6js68b$0qh7k)m)da_fp81om1!y)r$+y%'
 DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost'] 
-# --- FIM ---
 
 INSTALLED_APPS = [
     'jazzmin',
@@ -17,7 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'agenda', # Seu app
+    'agenda', 
 ]
 
 MIDDLEWARE = [
@@ -50,7 +49,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'barbersync_project.wsgi.application'
 
-# --- BANCO DE DADOS POSTGRES LOCAL (Seu original) ---
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -61,7 +60,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-# --- FIM DO BANCO ---
+
 
 AUTH_PASSWORD_VALIDATORS = [
     { 'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
@@ -72,29 +71,24 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'pt-br'
 
-# Fuso horário para sua região
+
 TIME_ZONE = 'America/Bahia' 
 
 USE_I18N = True
-USE_TZ = True # Essencial para o Django lidar com horários
+USE_TZ = True 
 
-# Estáticos (Configuração FINAL e CORRETA)
-# -----------------------------------------------------------------
 STATIC_URL = 'static/'
 
-# Diretórios para BUSCA de arquivos estáticos (Seu CSS customizado está aqui)
+
 STATICFILES_DIRS = [ 
     BASE_DIR / "static", 
-    os.path.join(BASE_DIR, 'agenda/static'), # Adicionado para garantir
+    os.path.join(BASE_DIR, 'agenda/static'), 
 ]
 
-# Diretório final para onde o 'collectstatic' COPIA TUDO
-# ESTA LINHA CORRIGE O ERRO "ImproperlyConfigured"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
-# -----------------------------------------------------------------
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -111,6 +105,8 @@ JAZZMIN_SETTINGS = {
         "auth": "fas fa-users-cog", "auth.user": "fas fa-user", "auth.Group": "fas fa-users",
         "agenda.barbeiros": "fas fa-cut", "agenda.servicos": "fas fa-stream",
         "agenda.barbeirosservicos": "fas fa-link", "agenda.horariosdisponiveis": "fas fa-calendar-alt",
+        "custom_css": "css/admin_custom.css",
+
     },
     "default_icon_parents": "fas fa-chevron-circle-right", "default_icon_children": "fas fa-circle",
     "related_modal_active": False, "custom_css": "css/admin_custom.css", "custom_js": None,
