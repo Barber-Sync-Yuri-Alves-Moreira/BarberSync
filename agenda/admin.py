@@ -1,6 +1,10 @@
 from django.contrib import admin
-from datetime import timedelta 
+from datetime import timedelta
 from .models import Barbeiros, Servicos, BarbeirosServicos, HorariosDisponiveis, Agendamentos
+
+from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin
+
 
 class CustomAdminMedia:
     class Media:
@@ -10,16 +14,13 @@ class CustomAdminMedia:
 
 class BarbeirosAdmin(admin.ModelAdmin):
     list_display = ('nome', 'imagem', 'descricao') 
-    search_fields = ('nome',) 
     actions = None
     
     class Media(CustomAdminMedia.Media):
         pass
 
 class ServicosAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'duracao_minutos', 'preco')
-    search_fields = ('nome',)
-    list_filter = ('duracao_minutos', 'preco') 
+    list_display = ('nome', 'duracao_minutos', 'preco') 
     actions = None
     
     class Media(CustomAdminMedia.Media):
@@ -27,7 +28,6 @@ class ServicosAdmin(admin.ModelAdmin):
 
 class BarbeirosServicosAdmin(admin.ModelAdmin):
     list_display = ('get_barbeiro_nome', 'get_servico_nome') 
-    list_filter = ('id_barbeiro', 'id_servico') 
     actions = None
 
     class Media(CustomAdminMedia.Media):
@@ -43,10 +43,8 @@ class BarbeirosServicosAdmin(admin.ModelAdmin):
 
 class HorariosDisponiveisAdmin(admin.ModelAdmin):
     list_display = ('get_barbeiro_nome', 'get_data_hora_com_gambiarra', 'disponivel') 
-    list_filter = ('id_barbeiro', 'data_hora', 'disponivel') 
     list_editable = ('disponivel',) 
     actions = None
-
     class Media(CustomAdminMedia.Media):
         pass
 
@@ -67,8 +65,6 @@ class HorariosDisponiveisAdmin(admin.ModelAdmin):
 
 class AgendamentosAdmin(admin.ModelAdmin):
     list_display = ('nome_cliente', 'telefone_cliente', 'servico', 'get_barbeiro_nome', 'get_data_hora')
-    search_fields = ('nome_cliente', 'telefone_cliente', 'cpf_cliente')
-    list_filter = ('horario__id_barbeiro', 'horario__data_hora')
     readonly_fields = ('horario',) 
     actions = None
     
@@ -89,10 +85,24 @@ class AgendamentosAdmin(admin.ModelAdmin):
     
     get_data_hora.short_description = 'Data e Hora'
     get_data_hora.admin_order_field = 'horario__data_hora'
+
+class CustomUserAdmin(UserAdmin):
+    search_fields = ()
+
+    list_filter = ()
+
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active')
+
+    class Media(CustomAdminMedia.Media):
+        pass
     
-    
+
+admin.site.unregister(User)
+
 admin.site.register(Barbeiros, BarbeirosAdmin)
 admin.site.register(Servicos, ServicosAdmin)
 admin.site.register(BarbeirosServicos, BarbeirosServicosAdmin)
 admin.site.register(HorariosDisponiveis, HorariosDisponiveisAdmin)
 admin.site.register(Agendamentos, AgendamentosAdmin)
+
+admin.site.register(User, CustomUserAdmin)
