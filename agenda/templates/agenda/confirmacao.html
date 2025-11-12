@@ -9,15 +9,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
     <title>Agendamento Confirmado</title>
     <style>
-        body {
+        body { 
             font-family: 'Poppins', Arial, sans-serif; 
             font-weight: 300; 
             max-width: 600px; 
             margin: 0 auto; 
-            padding: 0 10px; 
-            background-color: #1E1E1E;
+            padding: 0 10px;
+            background-color: #1E1E1E; 
             color: #fff;
-
             min-height: 100vh;
             display: flex;
             align-items: center; 
@@ -29,69 +28,63 @@
             border-radius: 12px; 
             padding: 20px; 
             box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2), 0 0 1rem rgba(0,0,0,0.2); 
-            text-align: center;
-            width: 100%; 
+            width: 100%;
             box-sizing: border-box;
-            margin: 20px auto;
+            margin: 20px auto; 
         }
         .logo-container { text-align: center; padding: 20px 0; }
         .logo-container h2 { margin: 0; font-size: 2em; font-weight: 500; }
         .logo-container img { max-width: 100px; margin-top: 10px; }
-
-        .success-icon {
-            color: #199c4b; 
-            font-size: 4em; 
-            margin: 20px 0 10px; 
-            line-height: 1;
-        }
+        
         h1 { 
-            font-size: 2em; 
-            color: #199c4b; 
-            margin-bottom: 10px; 
+            font-size: 1.8em; 
             font-weight: 500; 
+            margin-bottom: 10px; 
+            text-align: center;
+            color: #4CAF50; 
         }
-        p { font-size: 1.1em; margin-bottom: 25px; }
+        
+        .instrucao-texto {
+            text-align: center;
+            font-size: 1em;
+            color: #ccc;
+            margin-bottom: 25px;
+        }
 
-        .detail-card {
+        .info-card { 
             background-color: #2A2A2A; 
             border-radius: 8px; 
             padding: 15px; 
-            margin: 20px auto;
-            text-align: left;
+            margin-bottom: 30px; 
             border-left: 5px solid #00bfff; 
         }
-        .detail-card div {
-            padding: 8px 0;
-            border-bottom: 1px solid #383838; 
-        }
-        .detail-card div:last-child {
-            border-bottom: none;
-        }
-        .detail-card span {
-            display: block; 
-            font-size: 0.9em; 
-            color: #ccc;
-        }
-        .detail-card strong {
-            font-size: 1.1em; 
+        .info-card span { display: block; font-size: 0.9em; color: #ccc; }
+        .info-card strong { 
+            font-size: 1.2em; 
             font-weight: 500; 
-            color: #fff; 
+            color: #00bfff; 
             display: block; 
+            margin-top: 5px; 
         }
 
-        .btn-home {
-            display: inline-block;
-            background-color: #00bfff; 
+        .btn-submit { 
+            display: block; 
+            width: 100%;
+            background-color: #25D366; 
             color: #fff;
-            padding: 12px 25px;
+            padding: 15px;
+            border: none;
             border-radius: 4px;
-            text-decoration: none;
-            font-size: 1em;
+            font-size: 1.1em;
             font-weight: 500;
+            cursor: pointer;
             transition: background-color 0.3s;
             margin-top: 20px;
+            text-decoration: none; 
+            text-align: center; 
+            box-sizing: border-box;
         }
-        .btn-home:hover { background-color: #0099e6; } 
+        .btn-submit:hover { background-color: #1EAE50; }
     </style>
 </head>
 <body>
@@ -101,40 +94,26 @@
             <img src="{% static 'agenda/img/logo_barbersync.png' %}" alt="Logo BarberSync">
         </div>
 
-        <div class="success-icon">&#10003;</div>
         <h1>Agendamento Confirmado!</h1>
-        <p>Seu horário foi reservado com sucesso.</p>
+        <p class="instrucao-texto">
+            Seu horário foi reservado. Por favor, clique no botão abaixo para 
+            confirmar seu agendamento diretamente no WhatsApp.
+        </p>
 
-        <div class="detail-card">
-            <div>
-                <span>Cliente:</span>
-                <strong>{{ agendamento.nome_cliente }}</strong>
-            </div>
-            <div>
-                <span>Telefone:</span>
-                <strong>{{ agendamento.telefone_cliente }}</strong>
-            </div>
-            <div>
-                <span>Serviço:</span>
-                <strong>{{ servico.nome }}</strong>
-            </div>
-            <div>
-                <span>Barbeiro:</span>
-                <strong>{{ barbeiro.nome }}</strong>
-            </div>
-            <div>
-                <span>Data e Hora:</span>
-                <strong>{{ data_hora_agendada|date:"d/m/Y H:i" }}</strong>
-            </div>
-            {% if agendamento.observacoes %}
-            <div>
-                <span>Observações:</span>
-                <strong>{{ agendamento.observacoes }}</strong>
-            </div>
-            {% endif %}
+        <div class="info-card">
+            <span>Cliente: {{ agendamento.nome_cliente }}</span>
+            <span>Barbeiro: {{ barbeiro.nome }}</span>
+            <span>Serviço: {{ servico.nome }}</span>
+            <strong>Data: {{ data_hora_agendada|date:"d/m/Y" }}</strong>
+            <strong>Horário: {{ data_hora_agendada|date:"H:i" }}</strong>
         </div>
 
-        <a href="{% url 'lista_barbeiros' %}" class="btn-home">Novo Agendamento</a>
+        <a href="{{ whatsapp_link }}" 
+           class="btn-submit" 
+           target="_blank">
+            Confirmar no WhatsApp
+        </a>
+
     </div>
 </body>
 </html>

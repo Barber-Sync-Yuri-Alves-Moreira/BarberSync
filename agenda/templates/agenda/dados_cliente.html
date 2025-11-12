@@ -152,16 +152,36 @@
         </form>
     </div>
 
-    <script>
+<script>
+        /**
+         * Aplica a máscara de Telefone (XX) XXXXX-XXXX
+         * Este script é executado a cada tecla pressionada no campo de telefone.
+         */
         document.getElementById('id_telefone_cliente').addEventListener('input', function (e) {
+            // Remove tudo que não for dígito e aplica a máscara com RegEx
             var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
             e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
         });
+
+        /**
+         * Aplica a máscara de CPF (XXX.XXX.XXX-XX)
+         * A validação matemática acontece no 'views.py'.
+         */
         document.getElementById('id_cpf_cliente').addEventListener('input', function (e) {
+            // Pega o valor atual e remove tudo que não for dígito 
             var v = e.target.value.replace(/\D/g, '');
+
+            //  Adiciona o primeiro ponto 
+            //    Captura (3 dígitos)(\d) e substitui por (3 dígitos).(\d)
             v = v.replace(/(\d{3})(\d)/, '$1.$2');
+
+            // Adiciona o segundo ponto (ex: 123.4567 -> 123.456.7)
+            //    Aplica a mesma regra novamente
             v = v.replace(/(\d{3})(\d)/, '$1.$2');
+            //   Captura (3 dígitos) e (os últimos 1 ou 2 dígitos) e insere o traço.
+            //    O '$' garante que isso só ocorra no final da string.
             v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+
             e.target.value = v;
         });
     </script>
