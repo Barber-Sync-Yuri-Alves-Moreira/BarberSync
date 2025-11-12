@@ -58,6 +58,9 @@ DATABASES = {
         'PASSWORD': 'postgre',    
         'HOST': 'localhost',      
         'PORT': '5432',
+        'OPTIONS': {
+            'options': '-c timezone=utc'
+        }
     }
 }
 
@@ -73,16 +76,14 @@ LANGUAGE_CODE = 'pt-br'
 
 
 TIME_ZONE = 'America/Bahia' 
-
 USE_I18N = True
 USE_TZ = True 
-
 STATIC_URL = 'static/'
 
 
 STATICFILES_DIRS = [ 
     BASE_DIR / "static", 
-    os.path.join(BASE_DIR, 'agenda/static'), 
+
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
@@ -105,11 +106,11 @@ JAZZMIN_SETTINGS = {
         "auth": "fas fa-users-cog", "auth.user": "fas fa-user", "auth.Group": "fas fa-users",
         "agenda.barbeiros": "fas fa-cut", "agenda.servicos": "fas fa-stream",
         "agenda.barbeirosservicos": "fas fa-link", "agenda.horariosdisponiveis": "fas fa-calendar-alt",
-        "custom_css": "css/admin_custom.css",
-
     },
     "default_icon_parents": "fas fa-chevron-circle-right", "default_icon_children": "fas fa-circle",
-    "related_modal_active": False, "custom_css": "css/admin_custom.css", "custom_js": None,
+    "related_modal_active": False, 
+    "custom_css": "css/admin_custom.css", 
+    "custom_js": None,
     "show_ui_builder": False, "changeform_format": "horizontal_tabs",
     "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
 }

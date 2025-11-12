@@ -10,7 +10,6 @@
     
     <title>Selecionar Profissional</title>
     <style>
-        /* REGRA DE CENTRALIZAÇÃO HORIZONTAL E VERTICAL */
         body {
             font-family: 'Poppins', Arial, sans-serif;
             font-weight: 300;
@@ -18,29 +17,24 @@
             margin: 0 auto;
             padding: 20px 10px; 
             background-color: #1E1E1E; 
-            color: #FFFFFF; 
-            
-            /* NOVAS REGRAS PARA CENTRALIZAÇÃO VERTICAL */
+            color: #FFFFFF;
+
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-direction: column; /* Garante que o conteúdo flua normalmente */
+            flex-direction: column;
         }
         .main-card {
             background-color: #1E1E1E;
             border-radius: 12px;
-            /* Removido o padding do body para usar o padding do main-card */
             padding: 20px;
             box-shadow: 0 .25rem .25rem rgba(0,0,0,0.2),
                         0 0 1rem rgba(0,0,0,0.2);
-            /* Opcional: Adiciona margin vertical para evitar que toque nas bordas se for maior que a tela */
-            margin: 20px auto; 
-            width: 100%; /* Ajuste para preencher a largura máxima do body */
+            margin: 20px auto;
+            width: 100%;
             box-sizing: border-box;
         }
-        
-        /* ... (Restante do CSS, sem alterações significativas) ... */
 
         .logo-container {
             text-align: center;
@@ -69,7 +63,6 @@
             font-weight: 500;
         }
 
-        /* LISTA E CARDS DE BARBEIROS */
         .barbeiro-lista {
             list-style: none;
             padding: 0;
@@ -81,7 +74,7 @@
             margin-bottom: 15px;
             box-shadow: 0 .15rem .15rem rgba(0,0,0,0.1), 0 0 0.5rem rgba(0,0,0,0.1);
             position: relative;
-            border-left: 5px solid #00bfff; /* Filete Lateral Ciano */
+            border-left: 5px solid #00bfff;
             transition: transform 0.2s ease;
         }
         .barbeiro-card:hover {
@@ -96,11 +89,10 @@
             padding: 15px; 
         }
 
-        /* Imagem redonda */
         .barbeiro-imagem, .placeholder-imagem {
-            width: 80px; 
+            width: 80px;
             height: 80px;
-            border-radius: 50%; /* Imagem redonda */
+            border-radius: 50%;
             overflow: hidden;
             flex-shrink: 0;
             margin-right: 15px;
@@ -124,7 +116,7 @@
             margin: 0 0 5px 0;
             font-size: 1.2em;
             font-weight: 500;
-            color: #00bfff; /* Nome em Ciano */
+            color: #00bfff;
         }
         .barbeiro-conteudo p {
             margin: 0;

@@ -4,6 +4,38 @@ from django.utils import timezone
 from django.db.models.functions import TruncDate
 from datetime import datetime, timedelta
 from django.contrib import messages
+import re 
+
+
+def validar_cpf(cpf):
+
+    cpf = re.sub(r'[^0-9]', '', cpf)
+
+    if len(cpf) != 11:
+        return False
+
+    if cpf == cpf[0] * 11:
+        return False
+    soma = 0
+    for i in range(9):
+        soma += int(cpf[i]) * (10 - i)
+    resto = (soma * 10) % 11
+    if resto == 10:
+        resto = 0
+    if resto != int(cpf[9]):
+        return False
+
+    soma = 0
+    for i in range(10):
+        soma += int(cpf[i]) * (11 - i)
+    resto = (soma * 10) % 11
+    if resto == 10:
+        resto = 0
+    if resto != int(cpf[10]):
+        return False
+
+    return True
+
 
 def lista_barbeiros(request):
     barbeiros = Barbeiros.objects.all()
@@ -75,7 +107,7 @@ def selecionar_horario(request, barbeiro_id, servico_id, data):
 
 def dados_cliente(request, barbeiro_id, servico_id, horario_id):
 
-    horario_obj = get_object_or_404(HorariosDisponiveis, id=horario_id)
+    horario_obj = get_object_or_404(HorariosDisponiveis, id=horario_id) 
 
     if not horario_obj.disponivel:
         messages.error(request, "Este horário não está mais disponível. Por favor, selecione outro.")
@@ -85,35 +117,56 @@ def dados_cliente(request, barbeiro_id, servico_id, horario_id):
     if request.method == 'POST':
         nome_cliente = request.POST.get('nome_cliente')
         telefone_cliente = request.POST.get('telefone_cliente')
-        cpf_cliente = request.POST.get('cpf_cliente')
+        cpf_cliente = request.POST.get('cpf_cliente') 
+        if not validar_cpf(cpf_cliente):
+
+            messages.error(request, "CPF inválido. Por favor, verifique os dados.")
+            
+
+            horario_corrigido = get_object_or_404(HorariosDisponiveis, id=horario_id)
+            if horario_corrigido.data_hora:
+                 horario_corrigido.data_hora = horario_corrigido.data_hora - timedelta(hours=3)
+
+            context = {
+                'barbeiro_id': barbeiro_id, 'servico_id': servico_id, 'horario_id': horario_id,
+                'horario': horario_corrigido,
+                'barbeiro': get_object_or_404(Barbeiros, id=barbeiro_id),
+                'servico': get_object_or_404(Servicos, id=servico_id),
+                'form_data': request.POST 
+            }
+            return render(request, 'agenda/dados_cliente.html', context)
+
 
         servico = get_object_or_404(Servicos, id=servico_id)
 
         try:
+            horario_original_para_salvar = get_object_or_404(HorariosDisponiveis, id=horario_id)
+
             novo_agendamento = Agendamentos.objects.create(
                 nome_cliente=nome_cliente,
                 telefone_cliente=telefone_cliente,
-                cpf_cliente=cpf_cliente,
+                cpf_cliente=cpf_cliente, 
                 servico=servico,
-                horario=horario_obj
+                horario=horario_original_para_salvar 
             )
 
-            horario_obj.disponivel = False
-            horario_obj.save()
-
+            horario_original_para_salvar.disponivel = False
+            horario_original_para_salvar.save()
             messages.success(request, f"Agendamento realizado com sucesso!")
-
             return redirect('confirmacao', agendamento_id=novo_agendamento.id)
 
         except Exception as e:
             messages.error(request, f"Ocorreu um erro ao salvar o agendamento: {e}")
             return redirect('lista_barbeiros')
 
+    if horario_obj.data_hora:
+        horario_obj.data_hora = horario_obj.data_hora - timedelta(hours=3) 
+
     context = {
         'barbeiro_id': barbeiro_id,
         'servico_id': servico_id,
         'horario_id': horario_id,
-        'horario': horario_obj,
+        'horario': horario_obj, 
         'barbeiro': get_object_or_404(Barbeiros, id=barbeiro_id),
         'servico': get_object_or_404(Servicos, id=servico_id),
     }
@@ -122,7 +175,6 @@ def dados_cliente(request, barbeiro_id, servico_id, horario_id):
 def confirmacao(request, agendamento_id):
 
     agendamento = get_object_or_404(Agendamentos, id=agendamento_id)
-
     barbeiro = agendamento.horario.id_barbeiro
     servico = agendamento.servico
 

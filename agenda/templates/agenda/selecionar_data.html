@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
     <title>Selecionar Data</title>
     <style>
-        /* CENTRALIZAÇÃO HORIZONTAL E VERTICAL */
         body {
             font-family: 'Poppins', Arial, sans-serif;
             font-weight: 300;
@@ -19,7 +18,6 @@
             background-color: #1E1E1E;
             color: #fff;
 
-            /* REGRAS PARA CENTRALIZAÇÃO VERTICAL */
             min-height: 100vh;
             display: flex;
             align-items: center; 
@@ -50,12 +48,11 @@
             font-weight: 500;
         }
 
-        /* --- Estilo do Link Voltar --- */
         .link-voltar {
             display: block; 
             margin: 0 auto 20px auto; 
             width: fit-content; 
-            color: #00bfff; /* Cor ciano */
+            color: #00bfff;
             text-decoration: none;
             font-weight: 500;
             transition: color 0.2s;
@@ -64,7 +61,6 @@
             color: #ffa07a; 
         }
 
-        /* --- CARD DO BARBEIRO --- */
         .barbeiro-selecionado-card {
             background-color: #2A2A2A; 
             border-radius: 8px;
@@ -104,8 +100,7 @@
             font-weight: 500;
             color: #00bfff;
         }
-        
-        /* --- CARD DO SERVIÇO --- */
+
         .servico-card {
             background-color: #2A2A2A; 
             border-radius: 8px;
@@ -130,13 +125,12 @@
             font-weight: 500;
         }
 
-        /* --- LISTA E CARDS DE DATA (NOVO LAYOUT DE 3 COLUNAS) --- */
         .data-lista {
             list-style: none;
             padding: 0;
             margin: 0;
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* FORÇA 3 COLUNAS IGUAIS */
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
         }
         .data-card {
@@ -161,7 +155,7 @@
             padding: 15px 10px;
         }
         .data-card.empty {
-            grid-column: 1 / -1; /* Ocupa todas as colunas */
+            grid-column: 1 / -1;
             text-align: center; padding: 20px;
             color: #999; 
             background-color: #2A2A2A;
