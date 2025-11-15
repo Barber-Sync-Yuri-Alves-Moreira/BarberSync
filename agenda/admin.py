@@ -1,73 +1,46 @@
 from django.contrib import admin
-from datetime import timedelta
-from .models import Barbeiros, Servicos, BarbeirosServicos, HorariosDisponiveis, Agendamentos
-
+from datetime import timedelta 
+from .models import Barbeiros, Servicos, HorariosDisponiveis, Agendamentos
 from django.contrib.auth.models import User
-from django.contrib.auth.admin import UserAdmin
-
-
+from django.contrib.auth.admin import UserAdmin 
 class CustomAdminMedia:
     class Media:
         css = {
             'all': ('admin/css/admin_custom.css',) 
         }
+class ServicosInline(admin.TabularInline):
+    model = Servicos
+    extra = 1 
+    fields = ('nome', 'duracao_minutos', 'preco') 
+
+class HorariosDisponiveisInline(admin.TabularInline):
+    model = HorariosDisponiveis
+    extra = 1 
+    fields = ('data_hora', 'disponivel')
+
+
 
 class BarbeirosAdmin(admin.ModelAdmin):
     list_display = ('nome', 'imagem', 'descricao') 
-    actions = None
+    actions = None  
+    inlines = [ServicosInline, HorariosDisponiveisInline] 
     
     class Media(CustomAdminMedia.Media):
         pass
-
-class ServicosAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'duracao_minutos', 'preco') 
-    actions = None
-    
-    class Media(CustomAdminMedia.Media):
-        pass
-
-class BarbeirosServicosAdmin(admin.ModelAdmin):
-    list_display = ('get_barbeiro_nome', 'get_servico_nome') 
-    actions = None
-
-    class Media(CustomAdminMedia.Media):
-        pass
-    
-    def get_barbeiro_nome(self, obj):
-        return obj.id_barbeiro.nome
-    get_barbeiro_nome.short_description = 'Barbeiro' 
-
-    def get_servico_nome(self, obj):
-        return obj.id_servico.nome
-    get_servico_nome.short_description = 'Serviço' 
-
-class HorariosDisponiveisAdmin(admin.ModelAdmin):
-    list_display = ('get_barbeiro_nome', 'get_data_hora_com_gambiarra', 'disponivel') 
-    list_editable = ('disponivel',) 
-    actions = None
-    class Media(CustomAdminMedia.Media):
-        pass
-
-    def get_barbeiro_nome(self, obj):
-        return obj.id_barbeiro.nome
-    get_barbeiro_nome.short_description = 'Barbeiro'
-
-    def get_data_hora_com_gambiarra(self, obj):
-        if obj.data_hora is None:
-            return "N/A"
-        
-        data_hora_local = obj.data_hora - timedelta(hours=3)
-        return data_hora_local.strftime('%d/%m/%Y %H:%M')
-    
-    get_data_hora_com_gambiarra.short_description = 'Data e Hora' 
-    get_data_hora_com_gambiarra.admin_order_field = 'data_hora'
-
-
 class AgendamentosAdmin(admin.ModelAdmin):
     list_display = ('nome_cliente', 'telefone_cliente', 'servico', 'get_barbeiro_nome', 'get_data_hora')
     readonly_fields = ('horario',) 
-    actions = None
-    
+    list_filter = ('horario__id_barbeiro', 'horario__data_hora') 
+    actions = None 
+    def delete_model(self, request, obj):
+        horario = obj.horario
+        horario.disponivel = True 
+        horario.save()            
+        
+        obj.delete()
+        self.message_user(request, "Agendamento cancelado e horário liberado com sucesso.")
+
+
     class Media(CustomAdminMedia.Media):
         pass
 
@@ -79,7 +52,6 @@ class AgendamentosAdmin(admin.ModelAdmin):
     def get_data_hora(self, obj):
         if obj.horario.data_hora is None:
             return "N/A"
-        
         data_hora_local = obj.horario.data_hora - timedelta(hours=3)
         return data_hora_local.strftime('%d/%m/%Y %H:%M')
     
@@ -88,21 +60,14 @@ class AgendamentosAdmin(admin.ModelAdmin):
 
 class CustomUserAdmin(UserAdmin):
     search_fields = ()
-
     list_filter = ()
-
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active')
-
+    actions = None # Remove o campo "Ir"
+    
     class Media(CustomAdminMedia.Media):
         pass
     
-
 admin.site.unregister(User)
-
 admin.site.register(Barbeiros, BarbeirosAdmin)
-admin.site.register(Servicos, ServicosAdmin)
-admin.site.register(BarbeirosServicos, BarbeirosServicosAdmin)
-admin.site.register(HorariosDisponiveis, HorariosDisponiveisAdmin)
 admin.site.register(Agendamentos, AgendamentosAdmin)
-
 admin.site.register(User, CustomUserAdmin)
