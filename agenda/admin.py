@@ -30,7 +30,7 @@ class BarbeirosAdmin(admin.ModelAdmin):
 class AgendamentosAdmin(admin.ModelAdmin):
     list_display = ('nome_cliente', 'telefone_cliente', 'servico', 'get_barbeiro_nome', 'get_data_hora')
     readonly_fields = ('horario',) 
-    list_filter = ('horario__id_barbeiro', 'horario__data_hora') 
+
     actions = None  
     def get_queryset(self, request):
         qs = super().get_queryset(request)
